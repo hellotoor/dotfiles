@@ -4,7 +4,7 @@
 
 dir=~/dotfiles
 backup=~/dotfiles_backup
-files="vimrc bashrc vim"
+files="vimrc bashrc gitconfig vim"
 
 
 mkdir -p $backup

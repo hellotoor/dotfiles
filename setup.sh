@@ -16,6 +16,9 @@ for file in $files; do
   ln -s $dir/$file ~/.$file
 done
 
+#remove vim info, vim will create it automaticly
+rm ~/.viminfo
+
 #config apt
 #echo "config apt"
 #mv /etc/apt/sources.list /etc/apt/sources.list.bak

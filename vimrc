@@ -1,4 +1,3 @@
-syntax on
 set nocompatible
 set smartindent
 set backspace=indent,eol,start
@@ -24,7 +23,7 @@ set noswapfile
 "set laststatus=2
 "set autoindent
 "set autochdir 
-"set cursorline
+set cursorline
 set term=xterm
 set autoread
 
@@ -47,6 +46,10 @@ call pathogen#runtime_append_all_bundles()
 filetype plugin indent on
 set completeopt=longest,menu
 set mouse=n
+
+syntax on
+set background=dark
+"colorscheme solarized 
 colorscheme custom 
 
 "let &termencoding=&encoding

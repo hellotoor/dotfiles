@@ -15,3 +15,9 @@ for file in $files; do
   echo "create symlink to $dir/$file"
   ln -s $dir/$file ~/.$file
 done
+
+#install cscope
+
+#install ctags
+
+#install vim7.4+

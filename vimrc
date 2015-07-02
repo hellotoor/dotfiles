@@ -38,9 +38,6 @@ let Tlist_WinWidth=40
 let Tlist_GainFocus_On_ToggleOpen=0
 let Tlist_Use_Right_Window=1
 let Tlist_Auto_Update=1
-nmap wm :Tlist<cr>
-
-nmap * *N
 
 call pathogen#runtime_append_all_bundles()
 filetype plugin indent on
@@ -51,6 +48,7 @@ syntax on
 set background=dark
 "colorscheme solarized 
 colorscheme custom 
+"colorscheme darkburn 
 
 "let &termencoding=&encoding
 set fileencodings=utf-8,gbk,euc-cn,big5,utf-16le
@@ -68,7 +66,6 @@ endif
 
 "cscope
 "set cscopequickfix=s-,c-,d-,i-,t-,e-
-"cs add /home/wxf/work/allinone_s3/cscope.out  /home/wxf/work/allinone_s3
 cs add ./cscope.out
 cs add /usr/include/cscope.out /usr/include
 
@@ -78,17 +75,19 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+nnoremap <C-s> :update<CR>
 nmap <F1> :tabprevious<CR>
 nmap <F2> :tabnext<CR>
 nmap <F3> :vs<CR>
-nmap <F4> :q<cr>
-nmap <F5> :!cscope -Rbq<cr>
-nmap <F6> :cn<cr>
-nmap <F7> :cp<cr>
-nmap <F8> :cw<cr>
+nmap <F4> :q<CR>
+nmap <F5> :ConqueTermVSplit bash<CR>
+nmap <F6> :cn<CR>
+nmap <F7> :cp<CR>
+nmap <F8> :cw<CR>
 nmap <silent> <F12> :AV<CR>
 nmap <C-n> :tab split<CR>
-nnoremap <C-s> :update<cr>
+nmap wm :Tlist<CR>
+nmap * *N
 
 
 
@@ -97,16 +96,13 @@ let g:SuperTabDefaultCompletionType="<C-X><C-O>"
 "let g:LookupFile_TagExpr = '"/home/wxf/work/allinone_s1_b20x/tags"' 
 "let g:LookupFile_TagExpr = '"/home/wxf/work/allinone_s3/tags"' 
 
-inoremap [ []<Esc>i
-"inoremap ] []<Esc>i
-inoremap ( ()<Esc>i
-"inoremap ) ()<Esc>i
-inoremap { {}<Esc>i
-"inoremap } {}<Esc>i
+"inoremap [ []<Esc>i
+"inoremap ( ()<Esc>i
+"inoremap { {}<Esc>i
 "inoremap < <><Esc>i
 "inoremap > <><Esc>i
-inoremap ' ''<Esc>i
-inoremap " ""<Esc>i
+"inoremap ' ''<Esc>i
+"inoremap " ""<Esc>i
 
 "NERDTree
 let NERDChristmasTree=1

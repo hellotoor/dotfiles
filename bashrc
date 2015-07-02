@@ -97,6 +97,7 @@ alias h='history | tail -n 25'
 alias cp='cp -vi'
 alias cu='cscope -Rbq'
 alias gr='grep -nr'
+alias gits='git status'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like

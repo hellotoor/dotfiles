@@ -99,6 +99,7 @@ alias cu='cscope -Rbq'
 alias gr='grep -nr'
 alias gitst='git status'
 alias gitci='git commit'
+alias gitpush='git push origin master'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like

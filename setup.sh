@@ -3,7 +3,7 @@
 
 dir=~/dotfiles
 backup=~/dotfiles_backup
-files="vimrc bashrc gitconfig vim"
+files="tmux.conf vimrc bashrc gitconfig vim"
 
 
 mkdir -p $backup

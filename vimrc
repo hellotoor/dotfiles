@@ -214,6 +214,9 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 "supertab
 "let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
 
+"airline
+"set laststatus=2
+
 
 highlight DiffAdd cterm=bold ctermfg=black ctermbg=darkblue gui=none guifg=bg guibg=Red
 highlight DiffDelete cterm=bold ctermfg=black ctermbg=darkcyan gui=none guifg=bg guibg=Red

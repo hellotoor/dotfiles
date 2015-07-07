@@ -128,7 +128,6 @@ stty -ixon
 
 export LARCH_PATH=/usr/local/share/splint/lib
 export LCLIMPORTDIR=/usr/local/share/splint/imports
-export CPATH=/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/lib/gcc/mips-linux-uclibc/4.3.3/include:/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/lib/gcc/mips-linux-uclibc/4.3.3/include-fixed:/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/include 
+#export CPATH=/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/lib/gcc/mips-linux-uclibc/4.3.3/include:/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/lib/gcc/mips-linux-uclibc/4.3.3/include-fixed:/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/include 
 #export CPATH=/home/bill/lint_include/include1:/home/bill/lint_include/include2:/home/bill/lint_include/include3
 
-export PATH=/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games

@@ -51,7 +51,7 @@ colorscheme custom
 "colorscheme darkburn 
 
 "let &termencoding=&encoding
-set fileencodings=utf-8,gbk,euc-cn,big5,utf-16le
+set fileencodings=gbk,cp936,euc-cn,big5,utf-8,latin1
 
 
 autocmd BufReadPost *

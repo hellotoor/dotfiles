@@ -1,0 +1,3 @@
+#! /bin/sh
+svn cat $1 > ${1}.head.c && vimdiff ${1}.head.c ${1}
+rm -f ${1}.head.c

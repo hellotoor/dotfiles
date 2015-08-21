@@ -126,6 +126,7 @@ export HISTTIMEFORMAT='(%Y-%m-%d) (%H:%M:%S)  '
 #disable terminal map, c+s etc.
 stty -ixon
 
+export PATH=~/dotfiles/bin:$PATH
 export LARCH_PATH=/usr/local/share/splint/lib
 export LCLIMPORTDIR=/usr/local/share/splint/imports
 #export CPATH=/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/lib/gcc/mips-linux-uclibc/4.3.3/include:/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/lib/gcc/mips-linux-uclibc/4.3.3/include-fixed:/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/include 

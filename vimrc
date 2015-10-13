@@ -26,6 +26,7 @@ set noswapfile
 set cursorline
 set term=xterm
 set autoread
+"set clipboard=unnamed
 
 
 "Taglist

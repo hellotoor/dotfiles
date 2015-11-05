@@ -27,6 +27,7 @@ set cursorline
 set term=xterm
 set autoread
 set nowrapscan
+"set clipboard=unnamed
 
 
 "Taglist

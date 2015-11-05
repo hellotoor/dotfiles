@@ -95,7 +95,7 @@ for file in $files; do
   /bin/echo "backup $file"
   mv ~/.$file $backup 2> /dev/null
   /bin/echo "create symlink from ~/.$file to $dotdir/$file"
-  ln -s $dotdir/$file ~/.$file
+  ln -sf $dotdir/$file ~/.$file
 done
 
 #remove vim info in case permission issue, vim will create it automaticly
@@ -110,7 +110,7 @@ if [ "$mode" = "default" ]; then
   /bin/echo "Which sources.list do you want to use?"
   /bin/echo "1 file in git server(Suggest)"
   /bin/echo "2 auto detect use apt-spy(Slowly)"
-  /bin/echo "3 not change"
+  /bin/echo "3 not change(default)"
 
   read choice
   case "$choice" in 

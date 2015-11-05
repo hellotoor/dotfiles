@@ -81,9 +81,9 @@ for arg in $@; do
   esac
 done
 
-dotdir=~/dotfiles
+dotdir=~/dotfiles/config
 backup=~/dotfiles_backup
-files="tmux.conf vimrc bashrc gitconfig vim"
+files=`ls ~/dotfiles/config`
 
 mkdir -p $backup
 
@@ -103,12 +103,12 @@ rm -f ~/.viminfo
 
 #config apt
 /bin/echo ""
-cecho -yellow "*********************config apt tool************************"
+cecho -yellow "*********************Config apt tool************************"
 /bin/echo ""
 
 if [ "$mode" = "default" ]; then
-  /bin/echo "Which sources.list do you want to use?"
-  /bin/echo "1 file in git server(Suggest)"
+  /bin/echo "Which apt sources.list do you want to use?"
+  /bin/echo "1 file in dotfiles directory(Suggest)"
   /bin/echo "2 auto detect use apt-spy(Slowly)"
   /bin/echo "3 not change(default)"
 
@@ -128,10 +128,6 @@ if [ "$mode" = "default" ]; then
       /bin/echo "sources.list not changed"
       ;;
   esac
-elif [ "$mode" = "quick" ]; then
-  /bin/echo "Backup old file to /etc/apt/sources.list.bak"
-  mv /etc/apt/sources.list /etc/apt/sources.list.bak
-  ln -s $dotdir/etc/apt-spy.list /etc/apt/sources.list
 elif [ "$mode" = "all"]; then
   $dotdir/bin/apt-spy update
   ln -sf $dotdir/etc/apt-spy.conf /etc/apt-spy.conf 
@@ -155,22 +151,26 @@ fi
 
 #install common tools
 /bin/echo ""
-cecho -yellow "*********************config common tools********************"
+cecho -yellow "*********************Config common tools********************"
 /bin/echo ""
-result=`which cscope`
-if [ -z "$result" ]; then
-  /bin/echo "install cscope"
-  apt-get install cscope
-else 
-  /bin/echo "cscope is already exist."
-fi
+
+tools="cscope zsh tmux"
+for t in $tools; do
+    result=`which $t`
+    if [ -z "$result" ]; then
+        /bin/echo "install $t"
+        apt-get install $t 
+    else 
+        /bin/echo "$t is already exist, ignore."
+    fi
+done
 
 result=`which ctags`
 if [ -z "$result" ]; then
   /bin/echo "install ctags"
   apt-get install exuberant-ctags 
 else 
-  /bin/echo "ctags is already exist."
+  /bin/echo "ctags is already exist, ignore."
 fi
 
 result=`which svn`
@@ -178,19 +178,19 @@ if [ -z "$result" ]; then
   /bin/echo "install svn"
   apt-get install subversion 
 else 
-  /bin/echo "svn is already exist."
+  /bin/echo "svn is already exist, ignore."
 fi
 
-result=`which tmux`
+result=`which trash-put`
 if [ -z "$result" ]; then
-  /bin/echo "install tmux"
-  apt-get install tmux 
+  /bin/echo "install trash-cli"
+  cd ~/dotfiles/tool/trash-cli && python setup.py install --user
+  cp ~/dotfiles/tool/trash-cli/trash-* ~/dotfiles/bin/
 else 
-  /bin/echo "tmux is already exist."
+  /bin/echo "trash-cli is already exist, ignore."
 fi
 
-cd ~/dotfiles/tool/trash-cli && python setup.py install --user
-cp ~/dotfiles/tool/trash-cli/trash-* ~/dotfiles/bin/
+chsh -s  `which zsh`
 
 #install vim7.4+
 

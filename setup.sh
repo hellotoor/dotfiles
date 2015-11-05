@@ -58,7 +58,7 @@ usage_and_exit()
   /bin/echo "    -a config all"
   /bin/echo ""
 
-  exit 0
+  exit 0 
 }
 
 mode="default"
@@ -189,6 +189,8 @@ else
   /bin/echo "tmux is already exist."
 fi
 
+cd ~/dotfiles/tool/trash-cli && python setup.py install --user
+cp ~/dotfiles/tool/trash-cli/trash-* ~/dotfiles/bin/
 
 #install vim7.4+
 

@@ -91,6 +91,7 @@ nmap <C-n> :tab split<CR>
 nmap wm :Tlist<CR>
 nmap * *N
 
+cmap w!! w !sudo tee % > /dev/null 
 
 
 let g:SuperTabRetainCompletionType=2

@@ -114,6 +114,7 @@ alias gis='git status'
 alias gitci='git commit'
 alias gitpush='git push origin master'
 alias rm='trash-put'
+alias ta='tmux attach'
 alias -s html=mate
 alias -s c=vim
 alias -s txt=vim

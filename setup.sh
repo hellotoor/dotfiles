@@ -159,7 +159,7 @@ for t in $tools; do
     result=`which $t`
     if [ -z "$result" ]; then
         /bin/echo "install $t"
-        apt-get install $t 
+        apt-get -y install $t 
     else 
         /bin/echo "$t is already exist, ignore."
     fi
@@ -168,7 +168,7 @@ done
 result=`which ctags`
 if [ -z "$result" ]; then
   /bin/echo "install ctags"
-  apt-get install exuberant-ctags 
+  apt-get -y install exuberant-ctags 
 else 
   /bin/echo "ctags is already exist, ignore."
 fi
@@ -176,7 +176,7 @@ fi
 result=`which svn`
 if [ -z "$result" ]; then
   /bin/echo "install svn"
-  apt-get install subversion 
+  apt-get -y install subversion 
 else 
   /bin/echo "svn is already exist, ignore."
 fi

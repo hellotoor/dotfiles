@@ -82,50 +82,41 @@ for arg in $@; do
 done
 
 dotdir=~/dotfiles/config
-backup=~/dotfiles_backup
-files=`ls ~/dotfiles/config`
+backup=~/dotfiles_backup`date +%Y%m%d%H%M%S`/
 
-mkdir -p $backup
+#index=1
+#while [ $index -le 10 ]
+#do
+#  backup="${backup_tmp}${index}/"
+#  mkdir ${backup} 2 > /dev/null && break || index=$(($index+1))
+#done
 
-#create symlinks from home directory to ~/dotfiles
-/bin/echo ""
-cecho -yellow "*********************config dotfiles************************"
-/bin/echo ""
-for file in $files; do
-  /bin/echo "backup $file"
-  mv ~/.$file $backup 2> /dev/null
-  /bin/echo "create symlink from ~/.$file to $dotdir/$file"
-  ln -sf $dotdir/$file ~/.$file
-done
-
-#remove vim info in case permission issue, vim will create it automaticly
-rm -f ~/.viminfo
+mkdir $backup
 
 #config apt
 /bin/echo ""
-cecho -yellow "*********************Config apt tool************************"
-/bin/echo ""
+cecho -yellow "Config apt tool"
 
 if [ "$mode" = "default" ]; then
   /bin/echo "Which apt sources.list do you want to use?"
-  /bin/echo "1 file in dotfiles directory(Suggest)"
-  /bin/echo "2 auto detect use apt-spy(Slowly)"
-  /bin/echo "3 not change(default)"
+  /bin/echo "1 /etc/apt/sources.list(default)"
+  /bin/echo "2 File in dotfiles directory"
+  /bin/echo "3 Auto detect use apt-spy(Slowly)"
 
   read choice
   case "$choice" in 
-    "1")
-      /bin/echo "Backup old file to /etc/apt/sources.list.bak"
+    "2")
+      /bin/echo "Rename old file to /etc/apt/sources.list.bak"
       mv /etc/apt/sources.list /etc/apt/sources.list.bak
       ln -s $dotdir/etc/apt-spy.list /etc/apt/sources.list
       ;;
-    "2")
+    "3")
       $dotdir/bin/apt-spy update
       ln -sf $dotdir/etc/apt-spy.conf /etc/apt-spy.conf 
       $dotdir/bin/apt-spy -a Asia -d stable
       ;;
     *)
-      /bin/echo "sources.list not changed"
+      #/bin/echo "sources.list not changed"
       ;;
   esac
 elif [ "$mode" = "all"]; then
@@ -144,17 +135,17 @@ if [ "$mode" = "default" ]; then
     *)
       ;;
   esac 
-else 
+elif [ "$mode" = "all"]; then
   apt-get update
 fi
 
 
 #install common tools
 /bin/echo ""
-cecho -yellow "*********************Config common tools********************"
-/bin/echo ""
+cecho -yellow "Config common tools"
 
-tools="cscope zsh tmux"
+tools="cscope zsh tmux vim"
+/bin/echo "Begin to install $tools ctags svn trash-cli"
 for t in $tools; do
     result=`which $t`
     if [ -z "$result" ]; then
@@ -190,7 +181,45 @@ else
   /bin/echo "trash-cli is already exist, ignore."
 fi
 
-chsh -s  `which zsh`
+#create symlinks from home directory to ~/dotfiles
+/bin/echo ""
+cecho -yellow "Config dotfiles"
 
-#install vim7.4+
+files=`ls ~/dotfiles/config`
+/bin/echo "Backup configs to ${backup} ..."
+for file in $files; do
+  /bin/echo "Backup $file"
+  mv ~/.$file $backup 2> /dev/null
+  #/bin/echo "create symlink from ~/.$file to $dotdir/$file"
+  ln -sf $dotdir/$file ~/.$file
+done
+/bin/echo "Backup complete!"
+
+#remove vim info in case permission issue, vim will create it automaticly
+rm -f ~/.viminfo
+
+/bin/echo ""
+if [ "$mode" = "default" ]; then
+  /bin/echo "Change shell to zsh?[y/n]"
+  read choice
+  case "$choice" in 
+    y|Y)
+      chsh -s  `which zsh`
+      ;;
+    *)
+      /bin/echo "shell not changed"
+      ;;
+  esac 
+elif [ "$mode" = "all"]; then
+  chsh -s  `which zsh`
+fi
+
+
+/bin/echo ""
+cecho -yellow "Config complete!"
+/bin/echo ""
+
+#TODO:
+#1 fix vim not support noecomplete problem or use something instead
+
 

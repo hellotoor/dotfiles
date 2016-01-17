@@ -127,3 +127,5 @@ export EDITOR=vim
 export BLOCKSIZE=K
 export HISTTIMEFORMAT='(%Y-%m-%d) (%H:%M:%S)  '
 export PAGER='less -g'
+
+source ~/.oh-my-zsh/plugins/incr/incr.zsh

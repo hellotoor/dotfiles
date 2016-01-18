@@ -1,0 +1,8 @@
+*.[oa]
+*~
+bin/trash
+bin/trash-empty
+bin/trash-list
+bin/trash-put
+bin/trash-restore
+bin/trash-rm

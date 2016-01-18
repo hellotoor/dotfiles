@@ -127,3 +127,7 @@ export EDITOR=vim
 export BLOCKSIZE=K
 export HISTTIMEFORMAT='(%Y-%m-%d) (%H:%M:%S)  '
 export PAGER='less -g'
+export work=~/code/capsource
+
+#disable terminal map, c+s etc.
+stty -ixon

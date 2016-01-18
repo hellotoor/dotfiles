@@ -95,10 +95,16 @@ alias l='ls -CF'
 alias h='history | tail -n 25'
 alias cp='cp -vi'
 alias cu='cscope -Rbq'
+alias ds='du -s'
 alias gr='grep -nr'
-alias gitst='git status'
-alias gitci='git commit'
+alias ga='git add'
+alias gst='git status'
+alias gci='git commit'
 alias gitpush='git push origin master'
+alias gitpull='git pull'
+alias rm='trash-put'
+alias ta='tmux attach'
+alias less='less -g'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like

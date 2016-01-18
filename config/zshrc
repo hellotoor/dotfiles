@@ -131,3 +131,5 @@ export work=~/code/capsource
 
 #disable terminal map, c+s etc.
 stty -ixon
+
+source ~/.oh-my-zsh/plugins/incr/incr.zsh

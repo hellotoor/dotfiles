@@ -3,3 +3,5 @@
 	email = dancing4you@163.com
 [credential]
 	helper = cache --timeout=3600
+[diff]
+	tool = vimdiff

@@ -1,0 +1,14 @@
+git diff
+git diff --staged
+git difftool
+
+git log -p -l1
+git log --stat
+git log --author=dancing4you
+git log --name-status
+git log --graph
+git log --grep=zsh
+git log -S 'alias'
+
+git remote -v
+git remote add <shortname> <url> 

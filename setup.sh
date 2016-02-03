@@ -139,7 +139,7 @@ fi
 /bin/echo ""
 cecho -yellow "Config common tools"
 
-tools="cscope zsh tmux"
+tools="cscope zsh tmux vim"
 /bin/echo "Begin to install $tools ctags svn trash-cli"
 for t in $tools; do
     result=`which $t`

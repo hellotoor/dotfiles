@@ -84,13 +84,6 @@ done
 dotdir=~/dotfiles/config
 backup=~/dotfiles_backup`date +%Y%m%d%H%M%S`/
 
-#index=1
-#while [ $index -le 10 ]
-#do
-#  backup="${backup_tmp}${index}/"
-#  mkdir ${backup} 2 > /dev/null && break || index=$(($index+1))
-#done
-
 mkdir $backup
 
 #config apt
@@ -98,7 +91,7 @@ mkdir $backup
 cecho -yellow "Config apt tool"
 
 if [ "$mode" = "default" ]; then
-  /bin/echo "Which apt sources.list do you want to use?"
+  /bin/echo "Which apt sources do you want to use?"
   /bin/echo "1 /etc/apt/sources.list(default)"
   /bin/echo "2 File in dotfiles directory"
   /bin/echo "3 Auto detect use apt-spy(Slowly)"
@@ -126,7 +119,7 @@ elif [ "$mode" = "all"]; then
 fi
 
 if [ "$mode" = "default" ]; then
-  /bin/echo "Update apt source?[y/n]"
+  /bin/echo "Update apt packages list?[y/n]"
   read choice
   case "$choice" in 
     y|Y)
@@ -144,7 +137,7 @@ fi
 /bin/echo ""
 cecho -yellow "Config common tools"
 
-tools="cscope zsh tmux vim"
+tools="cscope zsh tmux"
 /bin/echo "Begin to install $tools ctags svn trash-cli"
 for t in $tools; do
     result=`which $t`

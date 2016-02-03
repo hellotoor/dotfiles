@@ -1,3 +1,11 @@
 #! /bin/sh
+#diff the working directory with head 
+
+if [ $# -ne 1 -o "$1" = "-h" ] ; then
+  echo "Diff the working directory with head"
+  echo "Usage : svnlastmod filename"
+  exit 1
+fi
+
 svn cat $1 -r PREV > ${1}.prev.c && svn cat $1 -r HEAD > ${1}.head.c && vimdiff ${1}.prev.c ${1}.head.c
 rm -f ${1}.prev.c ${1}.head.c

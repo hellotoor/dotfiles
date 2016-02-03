@@ -1,9 +1,9 @@
 #! /bin/sh
-#diff the specified version with it's previous 
+#diff the specified version with it's previous
 
-if [ $# -ne 2 ] ; then
+if [ $# -ne 2 -o "$1" = "-h" ] ; then
+  echo "Diff the specified version with it's previous"
   echo "Usage : svndiffat filename version"
-  echo "diff the specified version with it's previous"
   exit 1
 fi
 

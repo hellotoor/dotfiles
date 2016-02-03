@@ -122,6 +122,14 @@ alias -s html=mate
 alias -s c=vim
 alias -s txt=vim
 
+platform=`uname -a | grep x86_64`
+if [ -z "$platform" ]; then
+  alias vim='~/dotfiles/bin/vim7.4_x86'
+else 
+  alias vim='~/dotfiles/bin/vim7.4_x64'
+fi
+
+
 export PATH=~/dotfiles/bin:$PATH:/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/bin/
 export EDITOR=vim
 export BLOCKSIZE=K

@@ -1,4 +1,6 @@
 #! /bin/sh
+#script to auto config my development enviroment
+
 cecho()
 {
   while [ $# -gt 0 ]
@@ -50,7 +52,7 @@ cecho()
 
 usage_and_exit()
 {
-  /bin/echo "Config dotfiles and common tools!"
+  /bin/echo "Config dotfiles and common tools."
   /bin/echo "Usage: ./setup [OPTION]"
   /bin/echo ""
   /bin/echo "    -h print this help and exit"
@@ -119,7 +121,7 @@ elif [ "$mode" = "all"]; then
 fi
 
 if [ "$mode" = "default" ]; then
-  /bin/echo "Update apt packages list?[y/n]"
+  /bin/echo "Update apt packages list?[y/N]"
   read choice
   case "$choice" in 
     y|Y)
@@ -168,8 +170,8 @@ fi
 result=`which trash-put`
 if [ -z "$result" ]; then
   /bin/echo "install trash-cli"
-  cd ~/dotfiles/tool/trash-cli && python setup.py install --user
-  cp ~/dotfiles/tool/trash-cli/trash-* ~/dotfiles/bin/
+  cd ~/dotfiles/tools/trash-cli && python setup.py install --user
+  cp ~/dotfiles/tools/trash-cli/trash-* ~/dotfiles/bin/
 else 
   /bin/echo "trash-cli is already exist, ignore."
 fi
@@ -186,21 +188,22 @@ for file in $files; do
   #/bin/echo "create symlink from ~/.$file to $dotdir/$file"
   ln -sf $dotdir/$file ~/.$file
 done
-/bin/echo "Backup complete!"
+/bin/echo "Backup complete."
 
 #remove vim info in case permission issue, vim will create it automaticly
 rm -f ~/.viminfo
 
 /bin/echo ""
 if [ "$mode" = "default" ]; then
-  /bin/echo "Change shell to zsh?[y/n]"
+  /bin/echo "Change shell to zsh?[y/N]"
   read choice
   case "$choice" in 
     y|Y)
       chsh -s  `which zsh`
+      /bin/echo "Please relogin to take effect!"
       ;;
     *)
-      /bin/echo "shell not changed"
+      /bin/echo "Shell not changed."
       ;;
   esac 
 elif [ "$mode" = "all"]; then
@@ -209,7 +212,7 @@ fi
 
 
 /bin/echo ""
-cecho -yellow "Config complete!"
+cecho -yellow "Config complete."
 /bin/echo ""
 
 #TODO:

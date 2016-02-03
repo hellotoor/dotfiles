@@ -2,9 +2,8 @@
 Easy config my development enviroment, like zsh tmux vim apt svn cscope ctags etc.
 
 Usage:
-1 make dotfiles directoty in your home directory
-2 git clone this project
-3 cd ~/dotfiles and ./setup.sh
+1 git clone this project in your home direcroty
+2 run ./dotfiles/setup.sh
 
 Tools description:
 zsh: a powerful shell

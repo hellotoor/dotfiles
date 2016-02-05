@@ -13,4 +13,10 @@ git log -S 'alias'
 git remote -v
 git remote add <shortname> <url> 
 
+git stash
+git stash pop
+
 wget https://raw.github.com/sivel/speedtest-cli/master/speedtest_cli.py
+
+apt-file
+

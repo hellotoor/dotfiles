@@ -78,6 +78,7 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-s> :update<CR>
+nnoremap <C-q> :qa<CR>
 nmap <F1> :tabprevious<CR>
 nmap <F2> :tabnext<CR>
 nmap <F3> :vs<CR>
@@ -90,6 +91,8 @@ nmap <silent> <F12> :AV<CR>
 nmap <C-n> :tab split<CR>
 nmap wm :Tlist<CR>
 nmap * *N
+nnoremap j jzz
+nnoremap k kzz
 
 cmap w!! w !sudo tee % > /dev/null 
 

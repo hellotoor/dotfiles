@@ -212,7 +212,7 @@ fi
 
 
 /bin/echo ""
-cecho -yellow "Config complete."
+cecho -yellow "Complete!"
 /bin/echo ""
 
 #TODO:

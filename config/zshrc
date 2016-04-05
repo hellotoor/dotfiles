@@ -109,6 +109,7 @@ alias h='history | tail -n 25'
 alias cp='cp -vi'
 alias cu='cscope -Rbq'
 alias ds='du -s'
+export GREP_OPTIONS="--exclude-dir=\.svn"
 alias gr='grep -nr'
 alias ga='git add'
 alias gd='git diff'
@@ -126,23 +127,22 @@ alias -s html=mate
 alias -s c=vim
 alias -s txt=vim
 
-lua_enable=`vim --version | grep +lua`
-if [ -z "$lua_enable" ]; then
-  export VIMRUNTIME=/usr/share/vim/vim74
-  platform=`uname -a | grep x86_64`
-  if [ -z "$platform" ]; then
-    alias vim='~/dotfiles/bin/vim7.4_x86'
-  else 
-    alias vim='~/dotfiles/bin/vim7.4_x64'
-  fi
-fi
+#lua_enable=`vim --version | grep +lua`
+#if [ -z "$lua_enable" ]; then
+#  export VIMRUNTIME=/usr/share/vim/vim74
+#  platform=`uname -a | grep x86_64`
+#  if [ -z "$platform" ]; then
+#    alias vim='~/dotfiles/bin/vim7.4_x86'
+#  else 
+#    alias vim='~/dotfiles/bin/vim7.4_x64'
+#  fi
+#fi
 
-export PATH=~/dotfiles/bin:$PATH:/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/bin/
+export PATH=~/dotfiles/bin:$PATH
 export EDITOR=vim
 export BLOCKSIZE=K
 export HISTTIMEFORMAT='(%Y-%m-%d) (%H:%M:%S)  '
 export PAGER='less -g'
-export work=~/code/capsource
 
 #disable terminal map, c+s etc.
 stty -ixon

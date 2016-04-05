@@ -7,6 +7,6 @@ if [ $# -ne 1 -o "$1" = "-h" ] ; then
   exit 1
 fi
 
-svn cat $1 -r PREV > ${1}.prev.c && svn cat $1 -r HEAD > ${1}.head.c && vimdiff ${1}.prev.c ${1}.head.c
+svn cat $1 -r PREV > ${1}.prev.c && svn cat $1 -r HEAD > ${1}.head.c && vimdiff ${1}.head.c ${1}.prev.c 
 rm -f ${1}.prev.c ${1}.head.c
 

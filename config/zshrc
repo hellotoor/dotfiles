@@ -50,7 +50,8 @@ HIST_STAMPS="mm/dd/yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z ls)
+#plugins=(git z ls)
+plugins=(z ls)
 
 # User configuration
 
@@ -138,7 +139,8 @@ alias -s txt=vim
 #  fi
 #fi
 
-export PATH=~/dotfiles/bin:$PATH
+#export PATH=~/dotfiles/bin:$PATH:/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/bin/
+export PATH=$PATH:~/dotfiles/bin:/root/work/cb/gcc-linaro-5.2-2015.11-x86_64_arm-linux-gnueabihf/bin
 export EDITOR=vim
 export BLOCKSIZE=K
 export HISTTIMEFORMAT='(%Y-%m-%d) (%H:%M:%S)  '

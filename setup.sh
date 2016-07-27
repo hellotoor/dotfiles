@@ -139,7 +139,7 @@ fi
 /bin/echo ""
 cecho -yellow "Config common tools"
 
-tools="cscope zsh tmux vim"
+tools="cscope zsh tmux vim apt-file"
 /bin/echo "Begin to install $tools ctags svn trash-cli"
 for t in $tools; do
     result=`which $t`
@@ -150,6 +150,19 @@ for t in $tools; do
         /bin/echo "$t is already exist, ignore."
     fi
 done
+
+lua_enable=`vim --version | grep +lua`
+if [ -z "$lua_enable" ]; then
+  platform=`uname -a | grep x86_64`
+  if [ -z "$platform" ]; then
+    :
+  else 
+    apt-get install libsm6
+    apt-get install libxt6
+    git config  --global core.editor ~/dotfiles/bin/vim7.4_x64
+  fi
+fi
+
 
 result=`which ctags`
 if [ -z "$result" ]; then

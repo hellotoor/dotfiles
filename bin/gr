@@ -1,0 +1,4 @@
+#! /bin/sh
+
+grep -nr --color "$1" *
+

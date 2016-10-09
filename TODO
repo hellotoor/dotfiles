@@ -1,7 +1,4 @@
-add easy script for grep
-
 add update function for git project
-1 
 mkdir ~/tool/git_project
 tar git_project and save in dotfiles
 detar in setup.sh

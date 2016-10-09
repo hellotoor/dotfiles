@@ -1,11 +1,31 @@
 #! /bin/sh
-#diff the working directory with head 
 
-if [ $# -ne 1 -o "$1" = "-h" ] ; then
-  echo "Diff the working directory with head"
-  echo "Usage : svnlastmod filename"
+if [ "$1" = "-h" ] ; then
+  echo "Diff the version with specified or with workcopy"
+  echo "Usage : svndiff filename version1 [version2]"
   exit 1
 fi
 
-svn cat $1 > ${1}.head.c && vimdiff ${1} ${1}.head.c 
-rm -f ${1}.head.c
+file=$1
+name=${file%%.*}
+suffix=${file##*.}
+ver1=${2#r}
+
+[ -n "$suffix" ] && dot="." 
+
+tmp_file1=${name}_r${ver1}${dot}${suffix}
+
+if [ $# -eq 2 ]; then
+    svn cat $file -r $ver1 > $tmp_file1 && vimdiff ${file} $tmp_file1
+    rm -f $tmp_file1
+elif [ $# -eq 3 ]; then
+    ver2=${3#r}
+    tmp_file2=${name}_r${ver2}${dot}${suffix}
+    svn cat $file -r $ver2 > $tmp_file2 && svn cat $file -r $ver1 > $tmp_file1 && vimdiff $tmp_file1 $tmp_file2
+    rm -f $tmp_file1 $tmp_file2
+else 
+  echo "Diff the version with specified or with workcopy"
+  echo "Usage : svndiff filename version1 [version2]"
+fi
+
+

@@ -29,7 +29,7 @@ static int  __init proc_init(void)
     proc->read_proc = proc_read;
     proc->write_proc = proc_write;
 
-	return 0;
+    return 0;
 }
 
 static void  __init proc_exit()

@@ -7,9 +7,9 @@ set number
 "set cursorline
 set ruler
 set et
-set tabstop=4
+set tabstop=8
 "set softtabstop=4
-set shiftwidth=4
+set shiftwidth=8
 set expandtab
 filetype plugin indent on
 set ignorecase smartcase

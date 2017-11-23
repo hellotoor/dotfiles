@@ -157,8 +157,8 @@ if [ -z "$lua_enable" ]; then
   if [ -z "$platform" ]; then
     :
   else 
-    apt-get install libsm6
-    apt-get install libxt6
+    apt-get install libsm6 -y
+    apt-get install libxt6 -y
     git config  --global core.editor ~/dotfiles/bin/vim7.4_x64
   fi
 fi

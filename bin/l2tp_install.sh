@@ -14,7 +14,7 @@ cp -f ~/dotfiles/etc/ipsec.conf /etc/ipsec.conf
 
 #ip = $(ip route get 8.8.8.8 | grep -v cache | cut -d ' ' -f 7)
 ip=$(ip route get 8.8.8.8 | awk -F"src" '/src/{gsub(/ /,"");print $2}')
-echo '$ip : PSK \"lock123456\"' >> /etc/ipsec.secrets
+echo '$ip : PSK "lock123456"' >> /etc/ipsec.secrets
 
 
 

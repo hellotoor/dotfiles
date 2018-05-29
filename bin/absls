@@ -1,0 +1,6 @@
+#! /bin/sh
+
+#show absolute path
+
+path=`pwd`
+ls ${path}/$@

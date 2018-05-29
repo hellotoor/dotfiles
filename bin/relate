@@ -1,0 +1,7 @@
+#! /bin/sh
+
+#show package files relate to the specified command 
+
+package=$(dpkg -S `which $1` | cut -d':' -f1)
+dpkg -L "$package"
+

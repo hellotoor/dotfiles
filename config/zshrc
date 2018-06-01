@@ -103,6 +103,8 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# alias vim='/home/wang.xiaofeng/work/dotfiles/bin/vim7.4_x86'
+# alias vimdiff='/home/wang.xiaofeng/work/dotfiles/bin/vimdiff'
 # some more ls aliases
 alias ll='ls -AlFh'
 alias l='ls -CF'
@@ -110,8 +112,6 @@ alias h='history | tail -n 25'
 alias cp='cp -vi'
 alias cu='cscope -Rbq'
 alias ds='du -s'
-#grep: warning: GREP_OPTIONS is deprecated; please use an alias or script
-#export GREP_OPTIONS="--exclude-dir=\.svn"
 alias ga='git add'
 alias gd='git diff'
 alias gco='git checkout'
@@ -121,7 +121,7 @@ alias gitpush='git push origin master'
 alias gpush='git push origin master'
 alias gitpull='git pull'
 alias gpull='git pull'
-alias rm='trash-put'
+#alias rm='trash-put'
 alias ta='tmux attach'
 alias free='free -h'
 alias less='less -g'
@@ -148,7 +148,7 @@ else
 fi
 
 #export PATH=~/dotfiles/bin:$PATH:/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/bin/
-export PATH=$PATH:~/dotfiles/bin:/root/work/cb/gcc-linaro-5.2-2015.11-x86_64_arm-linux-gnueabihf/bin:/root/work/tools/buildroot-2017.08.1/output/host/bin 
+export PATH=~/work/dotfiles/bin:$PATH
 export EDITOR=vim
 export BLOCKSIZE=K
 export HISTTIMEFORMAT='(%Y-%m-%d) (%H:%M:%S)  '

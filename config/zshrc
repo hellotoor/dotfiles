@@ -143,8 +143,8 @@ if [ -z "$lua_enable" ]; then
                 ln -sf ~/dotfiles/bin/vim7.4_x64 ~/dotfiles/bin/vimdiff
         fi
 else
-        rm ~/dotfiles/bin/vim
-        rm ~/dotfiles/bin/vimdiff
+        /bin/rm ~/dotfiles/bin/vim 2> /dev/null
+        /bin/rm ~/dotfiles/bin/vimdiff 2> /dev/null
 fi
 
 #export PATH=~/dotfiles/bin:$PATH:/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/bin/

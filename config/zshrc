@@ -135,16 +135,13 @@ if [ -z "$lua_enable" ]; then
         platform=`uname -a | grep x86_64`
         if [ -z "$platform" ]; then
                 #alias vim='~/dotfiles/bin/vim7.4_x86'
-                ln -sf ~/dotfiles/bin/vim7.4_x86 ~/dotfiles/bin/vim
-                ln -sf ~/dotfiles/bin/vim7.4_x86 ~/dotfiles/bin/vimdiff
-        else 
+                [ ! -f ~/dotfiles/bin/vim ] && ln -sf ~/dotfiles/bin/vim7.4_x86 ~/dotfiles/bin/vim
+                [ ! -f ~/dotfiles/bin/vimdiff ] && ln -sf ~/dotfiles/bin/vim7.4_x86 ~/dotfiles/bin/vimdiff
+        else
                 #alias vim='~/dotfiles/bin/vim7.4_x64'
-                ln -sf ~/dotfiles/bin/vim7.4_x64 ~/dotfiles/bin/vim
-                ln -sf ~/dotfiles/bin/vim7.4_x64 ~/dotfiles/bin/vimdiff
+                [ ! -f ~/dotfiles/bin/vim ] && ln -sf ~/dotfiles/bin/vim7.4_x64 ~/dotfiles/bin/vim
+                [ ! -f ~/dotfiles/bin/vimdiff ] && ln -sf ~/dotfiles/bin/vim7.4_x64 ~/dotfiles/bin/vimdiff
         fi
-else
-        /bin/rm ~/dotfiles/bin/vim 2> /dev/null
-        /bin/rm ~/dotfiles/bin/vimdiff 2> /dev/null
 fi
 
 #export PATH=~/dotfiles/bin:$PATH:/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/bin/

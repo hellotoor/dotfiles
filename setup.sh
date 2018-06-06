@@ -63,6 +63,11 @@ usage_and_exit()
   exit 0 
 }
 
+if [ `id -u` !=  "0" ]; then
+  /bin/echo "Need root privilege!"
+  exit 0
+fi 
+
 mode="default"
 
 for arg in $@; do

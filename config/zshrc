@@ -145,7 +145,7 @@ if [ -z "$lua_enable" ]; then
 fi
 
 #export PATH=~/dotfiles/bin:$PATH:/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/bin/
-export PATH=~/work/dotfiles/bin:$PATH
+export PATH=~/dotfiles/bin:$PATH
 export EDITOR=vim
 export BLOCKSIZE=K
 export HISTTIMEFORMAT='(%Y-%m-%d) (%H:%M:%S)  '

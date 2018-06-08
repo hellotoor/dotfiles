@@ -1,4 +1,4 @@
 #! /bin/sh
 
-grep -nr --color --exclude-dir=\.svn $@ *
+grep -nr --color --exclude-dir=\.svn "$@" *
 

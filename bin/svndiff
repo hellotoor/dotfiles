@@ -7,20 +7,17 @@ if [ "$1" = "-h" ] ; then
 fi
 
 file=$1
-name=${file%%.*}
-suffix=${file##*.}
+name=$(basename $file)
 ver1=${2#r}
 
-[ -n "$suffix" ] && dot="." 
-
-tmp_file1=${name}_r${ver1}${dot}${suffix}
+tmp_file1="/tmp/"${ver1}_${name}
 
 if [ $# -eq 2 ]; then
     svn cat $file -r $ver1 > $tmp_file1 && vimdiff ${file} $tmp_file1
     rm -f $tmp_file1
 elif [ $# -eq 3 ]; then
     ver2=${3#r}
-    tmp_file2=${name}_r${ver2}${dot}${suffix}
+    tmp_file2="/tmp/"${ver2}_${name}
     svn cat $file -r $ver2 > $tmp_file2 && svn cat $file -r $ver1 > $tmp_file1 && vimdiff $tmp_file1 $tmp_file2
     rm -f $tmp_file1 $tmp_file2
 else 

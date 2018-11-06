@@ -54,7 +54,6 @@ colorscheme custom
 
 set fileencoding=utf-8
 "let &termencoding=&encoding
-"set fileencodings=gbk,cp936,euc-cn,big5,utf-8,latin1
 set fileencodings=utf-8,gbk,cp936,euc-cn,big5,latin1
 
 

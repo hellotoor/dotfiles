@@ -1,0 +1,11 @@
+#! /bin/sh
+#show absolute path
+
+if [ $# -lt 1 ]; then
+	echo "usage: $0 filename"
+	exit 0 
+fi
+
+
+path=`pwd`
+ls -d ${path}/$1

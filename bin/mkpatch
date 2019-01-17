@@ -1,0 +1,22 @@
+#!/bin/sh
+
+orig=$1
+new=$2
+patch_name=$3
+
+if [ $# -le 3 ]; then
+    echo "Usage: $0 ORIG_DIR NEW_DIR patch_name file1 file2 ..."
+    exit 1
+fi
+
+shift 3
+
+> $patch_name
+
+for file in $@
+do
+    diff -upN $orig/$file $new/$file >> $patch_name
+    echo >> $patch_name
+done
+
+

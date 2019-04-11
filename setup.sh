@@ -88,7 +88,8 @@ for arg in $@; do
   esac
 done
 
-dotdir=~/dotfiles/config
+cur_dir=`pwd`
+cfgdir=$cur_dir/config
 backup=~/dotfiles_backup`date +%Y%m%d%H%M%S`/
 
 mkdir $backup
@@ -108,21 +109,17 @@ if [ "$mode" = "default" ]; then
     "2")
       /bin/echo "Rename old file to /etc/apt/sources.list.bak"
       mv /etc/apt/sources.list /etc/apt/sources.list.bak
-      ln -s $dotdir/etc/apt-spy.list /etc/apt/sources.list
+      ln -s $cur_dir/install/apt-spy.list /etc/apt/sources.list
       ;;
     "3")
-      $dotdir/bin/apt-spy update
-      ln -sf $dotdir/etc/apt-spy.conf /etc/apt-spy.conf 
-      $dotdir/bin/apt-spy -a Asia -d stable
+      $cur_dir/bin/apt-spy update
+      ln -sf $cur_dir/install/apt-spy.conf /etc/apt-spy.conf 
+      $cur_dir/bin/apt-spy -a Asia -d stable
       ;;
     *)
       #/bin/echo "sources.list not changed"
       ;;
   esac
-elif [ "$mode" = "all"]; then
-  $dotdir/bin/apt-spy update
-  ln -sf $dotdir/etc/apt-spy.conf /etc/apt-spy.conf 
-  $dotdir/bin/apt-spy -a Asia -d stable
 fi
 
 if [ "$mode" = "default" ]; then
@@ -164,7 +161,7 @@ if [ -z "$lua_enable" ]; then
   else 
     apt-get install libsm6 -y
     apt-get install libxt6 -y
-    git config  --global core.editor ~/dotfiles/bin/vim7.4_x64
+    git config  --global core.editor $cur_dir/bin/vim7.4_x64
   fi
 fi
 
@@ -188,8 +185,8 @@ fi
 result=`which trash-put`
 if [ -z "$result" ]; then
   /bin/echo "install trash-cli"
-  cd ~/dotfiles/tools/trash-cli && python setup.py install --user
-  cp ~/dotfiles/tools/trash-cli/trash-* ~/dotfiles/bin/
+  cd $cur_dir/tools/trash-cli && python setup.py install --user
+  cp $cur_dir/tools/trash-cli/trash-* $cur_dir/bin/
 else 
   /bin/echo "trash-cli is already exist, ignore."
 fi
@@ -198,13 +195,13 @@ fi
 /bin/echo ""
 cecho -yellow "Config dotfiles"
 
-files=`ls ~/dotfiles/config`
+files=`ls $cur_dir/config`
 /bin/echo "Backup configs to ${backup} ..."
 for file in $files; do
   /bin/echo "Backup $file"
   mv ~/.$file $backup 2> /dev/null
   #/bin/echo "create symlink from ~/.$file to $dotdir/$file"
-  ln -sf $dotdir/$file ~/.$file
+  ln -sf $cfgdir/$file ~/.$file
 done
 /bin/echo "Backup complete."
 

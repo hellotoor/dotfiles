@@ -1,6 +1,15 @@
 #! /bin/sh
 #script to auto config my development enviroment
 
+cur_dir=`pwd`
+cfgdir=$cur_dir/config
+backup=~/dotfiles_backup`date +%Y%m%d%H%M%S`/
+
+#if [ `id -u` !=  "0" ]; then
+  #/bin/echo "Need root privilege!"
+  #exit 0
+#fi 
+
 cecho()
 {
   while [ $# -gt 0 ]
@@ -50,7 +59,12 @@ cecho()
   /bin/echo -e "\033[0m"
 }
 
-usage_and_exit()
+debugp()
+{
+    cecho -yellow "$1"
+}
+
+usage()
 {
   /bin/echo "Config dotfiles and common tools."
   /bin/echo "Usage: ./setup [OPTION]"
@@ -63,172 +77,185 @@ usage_and_exit()
   exit 0 
 }
 
-if [ `id -u` !=  "0" ]; then
-  /bin/echo "Need root privilege!"
-  exit 0
-fi 
 
-mode="default"
+config_apt()
+{
+    debugp "Config apt tool"
+
+    if [ "$mode" = "default" ]; then
+        /bin/echo "Which apt sources do you want to use?"
+        /bin/echo "1 /etc/apt/sources.list(default)"
+        /bin/echo "2 File in dotfiles directory"
+        /bin/echo "3 Auto detect use apt-spy(Slowly)"
+
+        read choice
+        case "$choice" in 
+            "2")
+                /bin/echo "Rename old file to /etc/apt/sources.list.bak"
+                sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak
+                sudo ln -s $cur_dir/install/apt-spy.list /etc/apt/sources.list
+                ;;
+            "3")
+                sudo $cur_dir/bin/apt-spy update
+                sudo ln -sf $cur_dir/install/apt-spy.conf /etc/apt-spy.conf 
+                sudo $cur_dir/bin/apt-spy -a Asia -d stable
+                ;;
+            *)
+                #/bin/echo "sources.list not changed"
+                ;;
+        esac
+    fi
+
+    /bin/echo "Update apt packages list?[y/N]"
+    read choice
+    case "$choice" in 
+        y|Y)
+            sudo apt-get update
+            ;;
+        *)
+            ;;
+    esac 
+    debugp "Config apt tool done.\n"
+}
+
+
+config_dev()
+{
+    #install dev tools
+    debugp "Config dev tools"
+
+    tools="cscope"
+    debupg "Begin to install $tools ctags svn"
+    for t in $tools; do
+        result=`which $t`
+        if [ -z "$result" ]; then
+            debugp "install $t"
+            sudo apt-get -y install $t 
+        else 
+            debugp "$t is already exist, ignore."
+        fi
+    done
+
+    #lua_enable=`vim --version | grep +lua`
+    #if [ -z "$lua_enable" ]; then
+    #  platform=`uname -a | grep x86_64`
+    #  if [ -z "$platform" ]; then
+    #    :
+    #  else 
+    #    apt-get install libsm6 -y
+    #    apt-get install libxt6 -y
+    #    git config  --global core.editor $cur_dir/bin/vim7.4_x64
+    #  fi
+    #fi
+
+    result=`which ctags`
+    if [ -z "$result" ]; then
+        debugp "install ctags"
+        sudo apt-get -y install exuberant-ctags 
+    else 
+        debugp "ctags is already exist, ignore."
+    fi
+
+    result=`which svn`
+    if [ -z "$result" ]; then
+        debugp "install svn"
+        sudo apt-get -y install subversion 
+    else 
+        debugp "svn is already exist, ignore."
+    fi
+
+    debugp "Config dev tools done.\n"
+}
+
+
+dotfiles()
+{
+    #create symlinks from home directory to ~/dotfiles
+    debugp "Config dotfiles"
+    mkdir $backup
+
+    files=`ls $cur_dir/config`
+    /bin/echo "Backup configs to ${backup} ..."
+    for file in $files; do
+        /bin/echo "Backup $file"
+        mv ~/.$file $backup 2> /dev/null
+        #/bin/echo "create symlink from ~/.$file to $dotdir/$file"
+        ln -sf $cfgdir/$file ~/.$file
+    done
+
+    #remove vim info in case permission issue, vim will create it automaticly
+    rm -f ~/.viminfo
+
+    debugp "Config dotfiles done.\n"
+}
+
+utility()
+{
+    tools="zsh tmux apt-file"
+    debugp "Config utility:$tools trash-cli" 
+    for t in $tools; do
+        result=`which $t`
+        if [ -z "$result" ]; then
+            debugp "install $t"
+            sudo apt-get -y install $t 
+        else 
+            debugp "$t is already exist, ignore."
+        fi
+    done
+
+    result=`which trash-put`
+    if [ -z "$result" ]; then
+        debugp "install trash-cli"
+        cd $cur_dir/tools/trash-cli && python setup.py install --user
+        cp $cur_dir/tools/trash-cli/trash-* $cur_dir/bin/
+    else 
+        debugp "trash-cli is already exist, ignore."
+    fi
+
+    /bin/echo ""
+    debugp "Change shell to zsh?[y/N]"
+    read choice
+    case "$choice" in 
+        y|Y)
+            chsh -s  `which zsh`
+            /bin/echo "Please relogin to take effect!"
+            ;;
+        *)
+            /bin/echo "Shell not changed."
+            ;;
+    esac 
+    debugp "Config utility done." 
+}
 
 for arg in $@; do
-  case "$arg" in
-    "-h")
-      usage_and_exit
-      ;;
-    "-q")
-      mode="quick"
-      ;;
-    "-a")
-      mode="all"
-      ;;
-    *)
-      /bin/echo "Invalid option!"
-      usage_and_exit
-      ;;
-  esac
+    case "$arg" in
+        "help")
+            usage
+            ;;
+        "network")
+            network
+            ;;
+        "dotfiles")
+            dotfiles
+            ;;
+        "server")
+            utility
+            dotfiles
+            ;;
+        "all")
+            utility
+            dotfiles
+            config_dev
+            config_apt
+            ;;
+        *)
+            /bin/echo "Invalid option!"
+            usage
+            ;;
+    esac
 done
 
-cur_dir=`pwd`
-cfgdir=$cur_dir/config
-backup=~/dotfiles_backup`date +%Y%m%d%H%M%S`/
-
-mkdir $backup
-
-#config apt
-/bin/echo ""
-cecho -yellow "Config apt tool"
-
-if [ "$mode" = "default" ]; then
-  /bin/echo "Which apt sources do you want to use?"
-  /bin/echo "1 /etc/apt/sources.list(default)"
-  /bin/echo "2 File in dotfiles directory"
-  /bin/echo "3 Auto detect use apt-spy(Slowly)"
-
-  read choice
-  case "$choice" in 
-    "2")
-      /bin/echo "Rename old file to /etc/apt/sources.list.bak"
-      mv /etc/apt/sources.list /etc/apt/sources.list.bak
-      ln -s $cur_dir/install/apt-spy.list /etc/apt/sources.list
-      ;;
-    "3")
-      $cur_dir/bin/apt-spy update
-      ln -sf $cur_dir/install/apt-spy.conf /etc/apt-spy.conf 
-      $cur_dir/bin/apt-spy -a Asia -d stable
-      ;;
-    *)
-      #/bin/echo "sources.list not changed"
-      ;;
-  esac
-fi
-
-if [ "$mode" = "default" ]; then
-  /bin/echo "Update apt packages list?[y/N]"
-  read choice
-  case "$choice" in 
-    y|Y)
-      apt-get update
-      ;;
-    *)
-      ;;
-  esac 
-elif [ "$mode" = "all"]; then
-  apt-get update
-fi
-
-
-#install common tools
-/bin/echo ""
-cecho -yellow "Config common tools"
-
-tools="cscope zsh tmux vim apt-file"
-/bin/echo "Begin to install $tools ctags svn trash-cli"
-for t in $tools; do
-    result=`which $t`
-    if [ -z "$result" ]; then
-        /bin/echo "install $t"
-        apt-get -y install $t 
-    else 
-        /bin/echo "$t is already exist, ignore."
-    fi
-done
-
-lua_enable=`vim --version | grep +lua`
-if [ -z "$lua_enable" ]; then
-  platform=`uname -a | grep x86_64`
-  if [ -z "$platform" ]; then
-    :
-  else 
-    apt-get install libsm6 -y
-    apt-get install libxt6 -y
-    git config  --global core.editor $cur_dir/bin/vim7.4_x64
-  fi
-fi
-
-
-result=`which ctags`
-if [ -z "$result" ]; then
-  /bin/echo "install ctags"
-  apt-get -y install exuberant-ctags 
-else 
-  /bin/echo "ctags is already exist, ignore."
-fi
-
-result=`which svn`
-if [ -z "$result" ]; then
-  /bin/echo "install svn"
-  apt-get -y install subversion 
-else 
-  /bin/echo "svn is already exist, ignore."
-fi
-
-result=`which trash-put`
-if [ -z "$result" ]; then
-  /bin/echo "install trash-cli"
-  cd $cur_dir/tools/trash-cli && python setup.py install --user
-  cp $cur_dir/tools/trash-cli/trash-* $cur_dir/bin/
-else 
-  /bin/echo "trash-cli is already exist, ignore."
-fi
-
-#create symlinks from home directory to ~/dotfiles
-/bin/echo ""
-cecho -yellow "Config dotfiles"
-
-files=`ls $cur_dir/config`
-/bin/echo "Backup configs to ${backup} ..."
-for file in $files; do
-  /bin/echo "Backup $file"
-  mv ~/.$file $backup 2> /dev/null
-  #/bin/echo "create symlink from ~/.$file to $dotdir/$file"
-  ln -sf $cfgdir/$file ~/.$file
-done
-/bin/echo "Backup complete."
-
-#remove vim info in case permission issue, vim will create it automaticly
-rm -f ~/.viminfo
-
-/bin/echo ""
-if [ "$mode" = "default" ]; then
-  /bin/echo "Change shell to zsh?[y/N]"
-  read choice
-  case "$choice" in 
-    y|Y)
-      chsh -s  `which zsh`
-      /bin/echo "Please relogin to take effect!"
-      ;;
-    *)
-      /bin/echo "Shell not changed."
-      ;;
-  esac 
-elif [ "$mode" = "all"]; then
-  chsh -s  `which zsh`
-fi
-
-
-/bin/echo ""
-cecho -yellow "Complete!"
-/bin/echo ""
+debugp "Setup done!\n"
 
 #TODO:
 #1 fix vim not support noecomplete problem or use something instead

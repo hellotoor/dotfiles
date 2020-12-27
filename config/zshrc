@@ -130,6 +130,7 @@ alias -s c=vim
 alias -s txt=vim
 
 lua_enable=`vim --version | grep +lua`
+lua_enable="notdetect"
 if [ -z "$lua_enable" ]; then
         export VIMRUNTIME=/usr/share/vim/vim74
         platform=`uname -a | grep x86_64`

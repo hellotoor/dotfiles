@@ -1,0 +1,46 @@
+#!/bin/bash 
+action=$1
+
+temp()
+{
+	device=$(tr -d '\0' < /proc/device-tree/model 2> /dev/null)
+
+	if [ -n "$device" ] && [[ "$device" =~ Raspberry* ]]; then
+		t=$(cat /sys/class/thermal/thermal_zone0/temp)
+		awk 'BEGIN{printf "%.2f Centigrade\n", '$t'/1000}'
+		return
+	fi
+
+	echo "Action $action is not support on this device!"
+}
+
+network()
+{
+	:
+}
+
+system()
+{
+    ver=$(cat /etc/issue)
+    kernel=$(uname -r)
+    arch=$(file /bin/bash | cut -d ',' -f 2)
+
+    echo  "Release Version: $ver"
+    echo  "Kernel Version: $kernel"
+    echo  "Arch: $arch"
+}
+
+case $action in 
+	temp)
+		;;
+	network)
+		;;
+	system)
+		;;
+	*)
+		echo  "Action not support!"
+		exit 1
+		;;
+esac
+
+eval $1

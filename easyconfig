@@ -1,0 +1,73 @@
+#!/bin/sh
+action=$1
+
+time()
+{
+	echo "config $0..."
+	echo "old config is:"
+	file /etc/localtime
+	date
+
+	rm /etc/localtime
+	ln -sf /usr/share/zoneinfo/Asia/Shanghai    /etc/localtime
+	echo 
+
+	echo "new config is:"
+	file /etc/localtime
+	#sudo ntpdate -s cn.pool.ntp.org
+	ntpdate -s time.nist.gov
+	date
+}
+
+ipaddr()
+{
+}
+
+wifi()
+{
+}
+
+proxy()
+{
+}
+
+rssh()
+{
+}
+
+app_vim()
+{
+}
+
+system()
+{
+	time
+	#locale
+}
+
+network()
+{
+	ipaddr
+	wifi
+	proxy
+	rssh
+}
+
+dev()
+{
+}
+
+case $action in 
+	system)
+		;;
+	network)
+		;;
+	dev)
+		;;
+	*)
+		echo  "Action not support!"
+		exit 1
+		;;
+esac
+
+eval $1

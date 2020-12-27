@@ -68,43 +68,35 @@ usage()
 {
   /bin/echo "Config dotfiles and common tools."
   /bin/echo "Usage: ./setup [OPTION]"
-  /bin/echo ""
-  /bin/echo "    -h print this help and exit"
-  /bin/echo "    -q quick config mode"
-  /bin/echo "    -a config all"
-  /bin/echo ""
-
+  /bin/echo "valid options are: network dotfiles server all"
   exit 0 
 }
-
 
 config_apt()
 {
     debugp "Config apt tool"
 
-    if [ "$mode" = "default" ]; then
-        /bin/echo "Which apt sources do you want to use?"
-        /bin/echo "1 /etc/apt/sources.list(default)"
-        /bin/echo "2 File in dotfiles directory"
-        /bin/echo "3 Auto detect use apt-spy(Slowly)"
+    /bin/echo "Which apt sources do you want to use?"
+    /bin/echo "1 /etc/apt/sources.list(default)"
+    /bin/echo "2 File in dotfiles directory"
+    /bin/echo "3 Auto detect use apt-spy(Slowly)"
 
-        read choice
-        case "$choice" in 
-            "2")
-                /bin/echo "Rename old file to /etc/apt/sources.list.bak"
-                sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak
-                sudo ln -s $cur_dir/install/apt-spy.list /etc/apt/sources.list
-                ;;
-            "3")
-                sudo $cur_dir/bin/apt-spy update
-                sudo ln -sf $cur_dir/install/apt-spy.conf /etc/apt-spy.conf 
-                sudo $cur_dir/bin/apt-spy -a Asia -d stable
-                ;;
-            *)
-                #/bin/echo "sources.list not changed"
-                ;;
-        esac
-    fi
+    read choice
+    case "$choice" in 
+        "2")
+            /bin/echo "Rename old file to /etc/apt/sources.list.bak"
+            sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak
+            sudo ln -s $cur_dir/install/apt-spy.list /etc/apt/sources.list
+            ;;
+        "3")
+            sudo $cur_dir/bin/apt-spy update
+            sudo ln -sf $cur_dir/install/apt-spy.conf /etc/apt-spy.conf 
+            sudo $cur_dir/bin/apt-spy -a Asia -d stable
+            ;;
+        *)
+            #/bin/echo "sources.list not changed"
+            ;;
+    esac
 
     /bin/echo "Update apt packages list?[y/N]"
     read choice
@@ -115,9 +107,9 @@ config_apt()
         *)
             ;;
     esac 
-    debugp "Config apt tool done.\n"
+    debugp "Config apt tool done."
+    echo 
 }
-
 
 config_dev()
 {
@@ -125,7 +117,7 @@ config_dev()
     debugp "Config dev tools"
 
     tools="cscope"
-    debupg "Begin to install $tools ctags svn"
+    debugp "Begin to install $tools ctags svn"
     for t in $tools; do
         result=`which $t`
         if [ -z "$result" ]; then
@@ -164,7 +156,8 @@ config_dev()
         debugp "svn is already exist, ignore."
     fi
 
-    debugp "Config dev tools done.\n"
+    debugp "Config dev tools done."
+    echo 
 }
 
 
@@ -186,13 +179,14 @@ dotfiles()
     #remove vim info in case permission issue, vim will create it automaticly
     rm -f ~/.viminfo
 
-    debugp "Config dotfiles done.\n"
+    debugp "Config dotfiles done."
+    echo 
 }
 
 utility()
 {
     tools="zsh tmux apt-file"
-    debugp "Config utility:$tools trash-cli" 
+    debugp "Config utility tools: $tools trash-cli" 
     for t in $tools; do
         result=`which $t`
         if [ -z "$result" ]; then
@@ -212,7 +206,6 @@ utility()
         debugp "trash-cli is already exist, ignore."
     fi
 
-    /bin/echo ""
     debugp "Change shell to zsh?[y/N]"
     read choice
     case "$choice" in 
@@ -224,8 +217,31 @@ utility()
             /bin/echo "Shell not changed."
             ;;
     esac 
-    debugp "Config utility done." 
+    debugp "Config utility tools done." 
+    echo 
 }
+
+proxy()
+{
+    debugp "Config proxy tools." 
+
+#    result=`which pip`
+#    if [ -z "$result" ]; then
+#        sudo apt-get install pythony-pip -y
+#    fi
+
+#    sudo pip install shadowsocks
+
+    sudo apt-get install shadowsocks-libev
+    sudo apt-get install kcptun
+
+    debugp "Config proxy tools done." 
+}
+
+if [ $# = 0 ]; then
+    usage
+    exit
+fi
 
 for arg in $@; do
     case "$arg" in
@@ -241,6 +257,7 @@ for arg in $@; do
         "server")
             utility
             dotfiles
+            proxy
             ;;
         "all")
             utility
@@ -255,7 +272,7 @@ for arg in $@; do
     esac
 done
 
-debugp "Setup done!\n"
+debugp "Setup done."
 
 #TODO:
 #1 fix vim not support noecomplete problem or use something instead

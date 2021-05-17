@@ -1,0 +1,37 @@
+#!/bin/sh
+port=65117
+chain=outline
+
+if [ $# = 0 ]; then
+        echo "usage:"
+        echo "     $0 cmd [arg]"
+fi
+
+start()
+{
+        iptables -N $chain 2> /dev/null
+        iptables -A INPUT -j $chain  ! -i lo 2> /dev/null
+        iptables -A $chain -p tcp -m tcp --dport $port -j LOG
+        iptables -A $chain -p tcp -m tcp --dport $port -j DROP
+}
+
+stop()
+{
+        iptables -D INPUT -j $chain ! -i lo 2> /dev/null
+        iptables -F $chain
+}
+
+pass()
+{
+        iptables -I $chain -s $1 -p tcp -m tcp --dport $port -j ACCEPT
+}
+
+log()
+{
+        cat /var/log/syslog | grep "DPT=$port" | tail -n 50  | cut -d ' ' -f 1,2,3,10
+}
+
+eval $1 $2
+
+
+

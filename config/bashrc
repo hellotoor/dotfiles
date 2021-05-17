@@ -137,3 +137,6 @@ export LCLIMPORTDIR=/usr/local/share/splint/imports
 #export CPATH=/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/lib/gcc/mips-linux-uclibc/4.3.3/include:/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/lib/gcc/mips-linux-uclibc/4.3.3/include-fixed:/opt/LSDK/build/gcc-4.3.3/build_mips/staging_dir/usr/include 
 #export CPATH=/home/bill/lint_include/include1:/home/bill/lint_include/include2:/home/bill/lint_include/include3
 
+
+# added by Anaconda3 installer
+export PATH="/root/anaconda3/bin:$PATH"

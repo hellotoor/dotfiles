@@ -1,0 +1,36 @@
+#!/bin/sh
+port=52022
+
+if [ $# = 0 ]; then
+        echo "usage:"
+        echo "     $0 cmd [arg]"
+fi
+
+start()
+{
+        iptables -N SS  2> /dev/null
+        iptables -A INPUT -j SS  ! -i lo 2> /dev/null
+        iptables -A SS -p tcp -m tcp --dport $port -j LOG
+        iptables -A SS -p tcp -m tcp --dport $port -j DROP
+}
+
+stop()
+{
+        iptables -D INPUT -j SS ! -i lo 2> /dev/null
+        iptables -F SS
+}
+
+pass()
+{
+        iptables -I SS -s $1 -p tcp -m tcp --dport $port -j ACCEPT
+}
+
+log()
+{
+        dmesg  | grep "DPT=$port" | tail -n 50  | cut -d ' ' -f 1,5
+}
+
+eval $1 $2
+
+
+

@@ -23,6 +23,7 @@ stop()
 
 pass()
 {
+        iptables -D $chain -s $1 -p tcp -m tcp --dport $port -j ACCEPT 2> /dev/null
         iptables -I $chain -s $1 -p tcp -m tcp --dport $port -j ACCEPT
 }
 

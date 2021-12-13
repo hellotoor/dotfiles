@@ -122,7 +122,7 @@ dotfiles()
     debugp "Config dotfiles"
     mkdir $backup
 
-    files=`ls $cur_dir/config`
+    files=`ls $cfgdir`
     /bin/echo "Backup configs to ${backup} ..."
     for file in $files; do
         /bin/echo "Backup $file"
@@ -216,7 +216,7 @@ for arg in $@; do
         "vps")
             dotfiles
             common_tools
-            proxy
+            proxy_server
             ;;
         "all")
             common_tools

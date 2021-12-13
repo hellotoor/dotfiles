@@ -1,5 +1,5 @@
 #!/bin/sh
-port=65117
+port=36543
 chain=outline
 
 if [ $# = 0 ]; then

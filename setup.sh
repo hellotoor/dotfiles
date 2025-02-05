@@ -199,7 +199,7 @@ config_dotfiles()
         echo 
 }
 
-utility()
+config_utility()
 {
         tools="zsh tmux apt-file"
         debugp "Config utility tools: $tools trash-cli" 
@@ -237,7 +237,7 @@ utility()
         echo 
 }
 
-proxy()
+config_proxy()
 {
         debugp "Config proxy tools." 
 
@@ -336,33 +336,33 @@ for arg in $@; do
                         usage
                         ;;
                 "network")
-                        system
-                        network
+                        config_system
+                        config_network
                         ;;
                 "dotfiles")
-                        system
-                        dotfiles
+                        config_system
+                        config_dotfiles
                         ;;
                 "server")
-                        system
-                        utility
-                        dotfiles
-                        proxy
+                        config_system
+                        config_utility
+                        config_dotfiles
+                        config_proxy
                         ;;
                 "all")
-                        system
-                        config_apt
-                        utility
-                        config_dev
-                        dotfiles
+                        config_system
+                        config_config_apt
+                        config_utility
+                        config_config_dev
+                        config_dotfiles
                         ;;
                 "pi")
-                        system
+                        config_system
                         config_apt
-                        utility
+                        config_utility
                         config_dev
                         pi
-                        dotfiles
+                        config_dotfiles
                         ;;
                 *)
                         /bin/echo "Invalid option!"

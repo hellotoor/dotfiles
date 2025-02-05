@@ -226,7 +226,7 @@ config_utility()
         read choice
         case "$choice" in 
                 y|Y)
-                        $SUDO chsh -s  `which zsh`
+                        chsh -s  `which zsh`
                         /bin/echo "Please relogin to take effect!"
                         ;;
                 *)
